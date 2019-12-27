@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Maximilian Kulikov">
+        <title>Form</title>
+    </head>
+    <body>
+        <form action="http://demo.stools.net" method="post">
+            <label for="username">username</label>
+            <input type="text" name="username" id="username" required>
+            <label for="email">email</label>
+            <input type="email" name="email" id="email">
+            <label for="age">age</label>
+            <input type="number" min="0" name="age" id="age">
+            <label for="comment">comment</label>
+            <textarea name="comment" id="comment" required></textarea>
+            <label for="publish">publish</label>
+            <select name="publish" id="publish">
+                <option value="public">public</option>
+                <option value="private" selected>private</option>
+            </select>
+            <input type="submit">
+        </form>
+    </body>
+</html>

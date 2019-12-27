@@ -1,0 +1,2 @@
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ar.exe qc libWINLIBS.a  CMakeFiles/WINLIBS.dir/src/entry.cpp.obj CMakeFiles/WINLIBS.dir/ext/asio/common/asio.cpp.obj CMakeFiles/WINLIBS.dir/ext/asio/host/asiodrivers.cpp.obj CMakeFiles/WINLIBS.dir/ext/asio/host/pc/asiolist.cpp.obj
+C:\PROGRA~1\MINGW-~1\X86_64~1.0-P\mingw64\bin\ranlib.exe libWINLIBS.a

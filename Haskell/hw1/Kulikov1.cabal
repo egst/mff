@@ -1,0 +1,15 @@
+Name:		    Kulikov1
+Version:    	1.0.0
+Cabal-Version:  >= 1.4
+Author:		    Maximilian Kulikov
+Maintainer:     kulikov.maximilian@gmail.com
+License:        MIT
+License-File:   LICENSE
+Category:	    Game
+Synopsis:	    Conway's Game of Life
+Description:    Conway's Game of Life homework.
+Build-Type:     Simple
+
+executable Kulikov1
+    Main-Is:        Kulikov1.hs
+    Build-Depends:  base, gloss

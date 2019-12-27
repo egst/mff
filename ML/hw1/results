@@ -1,0 +1,119 @@
+## 1.1 results: ##
+
+Call:
+lm(formula = mpg ~ . - name, data = Auto)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-9.5903 -2.1565 -0.1169  1.8690 13.0604 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  -17.218435   4.644294  -3.707  0.00024 ***
+cylinders     -0.493376   0.323282  -1.526  0.12780
+displacement   0.019896   0.007515   2.647  0.00844 ** 
+horsepower    -0.016951   0.013787  -1.230  0.21963
+weight        -0.006474   0.000652  -9.929  < 2e-16 ***
+acceleration   0.080576   0.098845   0.815  0.41548
+year           0.750773   0.050973  14.729  < 2e-16 ***
+origin         1.426141   0.278136   5.127 4.67e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 3.328 on 384 degrees of freedom
+Multiple R-squared:  0.8215,    Adjusted R-squared:  0.8182 
+F-statistic: 252.4 on 7 and 384 DF,  p-value: < 2.2e-16
+
+## 1.2 results: ##
+
+Plots drawn.
+
+Assosiated R-squared values:
+ degree r.squared
+      1     0.179
+      2     0.194
+      3     0.196
+      4     0.214
+      5     0.215
+
+## 2.1 results:
+
+Entropy of mpg01:
+1
+
+## 2.3 results: ##
+
+Accuracy of the trivial classifier:
+0.506
+
+## 2.4 results: ##
+
+Training error rate:
+0.099
+
+Testing confusion matrix:
+          value
+prediction  0  1
+         0 37  4
+         1  3 35
+
+Testing error rate:
+0.089
+
+Testing sensitivity:
+0.925
+
+Testing specificity:
+0.897
+
+## 2.5 results: ##
+
+Confusion matrices:
+  0.1:  0  1 | 0.5:  0  1 | 0.9:  0  1
+0      24  0        37  4        40 13
+1      16 39         3 35         0 26
+
+Precision:
+ 0.1   0.5   0.9
+   1 0.902 0.755
+
+Sensitivity:
+ 0.1   0.5 0.9
+ 0.6 0.925   1
+
+F-meassure:
+  0.1   0.5  0.9
+ 0.75 0.914 0.86
+
+## 2.6 results: ##
+
+Tree with cp = 0.01 performance:
+ err.train err.test acc.train acc.test
+     0.058    0.076     0.942    0.924
+
+Tree with the "best" cp performance:
+ err.train err.test acc.train acc.test
+     0.099    0.089     0.901    0.911
+
+The "best" cp:
+0.026
+
+Performance of trees with cp from 0.01 to 0.1:
+      err.train   err.test acc.train  acc.test
+0.01 0.05750799 0.07594937 0.9424920 0.9240506
+0.02 0.07348243 0.08860759 0.9265176 0.9113924
+0.03 0.09904153 0.08860759 0.9009585 0.9113924
+0.04 0.09904153 0.08860759 0.9009585 0.9113924
+0.05 0.09904153 0.08860759 0.9009585 0.9113924
+0.06 0.09904153 0.08860759 0.9009585 0.9113924
+0.07 0.09904153 0.08860759 0.9009585 0.9113924
+0.08 0.09904153 0.08860759 0.9009585 0.9113924
+0.09 0.09904153 0.08860759 0.9009585 0.9113924
+0.1  0.09904153 0.08860759 0.9009585 0.9113924
+
+Cross-validation errors for different cp values:
+          CP nsplit rel error    xerror       xstd
+1 0.80128205      0 1.0000000 1.1538462 0.05606158
+2 0.02564103      1 0.1987179 0.2243590 0.03574042
+3 0.01602564      3 0.1474359 0.2243590 0.03574042
+4 0.01000000      5 0.1153846 0.2179487 0.03528944

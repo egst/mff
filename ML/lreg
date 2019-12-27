@@ -1,0 +1,25 @@
+l(t) = Σ{i in 1..n} (y[i] - f(x[i], t))^2
+
+d/dk l(t) = Σ{i} 2 * (y[i] - f(x[i], t)) * (- d/dk f(x[i], t))
+
+d/dk l(t) = -2 * Σ{i} (y[i] - f(x[i], t)) * d/dk f(x[i], t)
+                                            ~~~~~~~~~~~~~~~
+|| d/dk f(x[i], t)
+||
+|| d/dk t[0] + t[1]*x[i][1] + ... + t[k]x[i][k] + ... + t[m]*x[i][m]
+||
+|| x[i][k]
+
+d/dk l(t) = -2 * Σ{i} (y[i] - f(x[i], t)) * x[i][k]
+
+d/dk l(t) = 2 * Σ{i} (f(x[i], t) - y[i]) * x[i][k]
+
+The whole process:
+
+n samples of m features - x[i][j] where i is the sample index and j is the feature index
+... and x[0][j] = 1
+I need a linear function Σ{i in 0..m} t[i]x[k][i] that minimizes the loss for any k.
+(The loss function is RSS, its gradient is calculated above (l and d/dk l).)
+So I do linear regression t[i+1] = t[i] - step * Δl(t)
+
+

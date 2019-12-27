@@ -1,0 +1,15 @@
+input hz
+
+a = 1/2 * saw (10 * ) + 3/4 # out: 3/4..5/4
+f = 5 * sin (15 * )         # out:  -5..5   [Hz]
+
+s = a * sin ((440 + f) * )  # out:  -1..1
+
+
+floating a (integral x) { return 0.5 * saw(2 * pi * 10 * x) + 0.75; }
+floating f (integral x) { return 5 * sin(2 * pi * 15 * x); }
+
+floating s (integral x) { return a(x) * sin((440 + f(x)) * x); }
+                                             ^^^^^^^^^^
+
+

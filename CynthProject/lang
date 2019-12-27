@@ -1,0 +1,98 @@
+Konfigurace se skládá s příkazů {stmt} oddělených separátorem {br}.
+Příkazy jsou buď definice {def}, nebo reference {ref}.
+Definice jsou 
+
+configuration: {stmt}{br}[{stmt}{br}[...]]
+
+{br}: ; || \n
+
+{stmt}: {def} || {ref}
+
+{def}: {name}={expr}
+
+{ref}: {name}<-[{name}]
+
+{expr}:
+    {name}
+    {lit}
+    {expr|u} {expr|u}           -- composition
+    {expr|u} {expr|n}           -- application
+    {op|u} {expr|n}             -- unary operator application
+    {expr|n} {op|b} {expr|n}    -- binary operator application
+    {op|u} {expr|u}             -- unary operator composition
+    {expr|u} {op|b} {expr|u}    -- binary operator composition
+    {expr|u} {op|b} {expr|n}    -- (nullary expressions behave as constant unary)
+    {expr|n} {op|b} {expr|u}
+    {expr|*} {op|b}             -- partial binary operator application/composition
+    {op|b} {expr|*}
+    {op|u}                      -- partial unary operator application
+
+{lit}: ...
+
+{op|u}:
+    !   -- 1/x
+    -
+    +
+
+{op|b}:
+    +
+    -
+    *
+    /
+    |   -- convolution - lhs input signal, rhs filter (doesn't matter when using the convolution by definition)
+
+comments: #...\n || [...]
+
+directives: key value
+
+conv    sum || ft
+gon     inc || table
+
+examples: (__ is a placeholder)
+````````````````````````````````````````````````````````````````````````````````
+
+lfo1 = 0.5 * saw (20 *)
+lfo2 = 0.1 * sin (40 *)
+foo  = lfo1 * sin (lfo2 *)
+f    = __
+amp  = 0.6
+boo  = amp * (foo | f)
+
+bar <- foo
+baz <-
+
+## alternative:
+
+lfo1 = t -> 0.5 * saw (20 * t)
+lfo2 = t -> 0.1 * sin (40 * t)
+foo  = t -> lfo1 t * sin (lfo2 t * t)
+f    = __
+amp  = 0.6
+boo  = t -> amp t * (foo | f) t         # | is applied to functions, not values
+
+foo = t -> __
+bar = t -> foo      # nope
+baz = t -> u -> __  # nope
+
+## grammar of (->):
+# {def}: {name} -> {expr|n} # only nullary/constant expressions
+                            # {*} -> {*} is not an expression
+
+## nullary expressions:
+input <- __ # nullary function - syntactically behaves as a constant, but evaluated lazily
+            # - possibly different value on each evaluation
+
+## point-free:
+foo = input * sin           # behaves as foo (t) { return input() * sin(t) }
+                            # both are applied/evaluated implicitly
+input <- __                 # when changed to some unary function
+foo = input * sin           # stays the same syntactically
+
+## with parameters:
+foo = t -> input * sin t    # sin is applied explicitly, while input is evaluated "behind the scenes"
+input <- __                 # when changed to some unary function
+foo = t -> input t * sin t  # syntax changes
+                            # should changing "kind" of a reference be prohibited?
+                            # if not, syntax of the configuration doesn't match the actual structure after the change
+
+````````````````````````````````````````````````````````````````````````````````

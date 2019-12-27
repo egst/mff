@@ -1,0 +1,16 @@
+Name:		    Kulikov2
+Version:    	1.0.2
+Cabal-Version:  >= 1.4
+Author:		    Maximilian Kulikov
+Maintainer:     kulikov.maximilian@gmail.com
+License:        MIT
+License-File:   LICENSE
+Category:	    Parsers
+Synopsis:	    Slepys parser
+Description:    Parser and prettyfier for Slepys
+Build-Type:     Simple
+
+executable Kulikov2
+    Main-Is:        Kulikov2.hs
+    Build-Depends:  base, megaparsec, pretty, raw-strings-qq, transformers
+    Other-Modules:  Tools, Slepys, PrettySlepys, SlepysLexer, SlepysParser, SlepysVars

@@ -1,0 +1,164 @@
+<script>
+
+// TODO: type, $
+
+type.Bool = $
+    .ctor. True  ()
+    .ctor. False ()
+type.Maybe = t => $
+    .ctor. Just    (t)
+    .ctor. Nothing ()
+type.Integer  = $ .literal. Int   ( n => Math.round(n) || 0           )
+type.Index    = $ .literal. Ind   ( n => Math.abs(Math.round(n)) || 0 )
+type.Natural  = $ .literal. Nat   ( n => Math.abs(Math.round(n)) || 1 )
+type.Float    = $ .literal. Float ( n => Number(n)                    )
+type.Fraction = $ .ctor.    Frac  ( m => assert(Numeric(m), m) ) ( n => assert(NonZero(n), n) )
+
+typeclass.Numeric = t => $
+    .sign. add (t(t(t)))
+
+typeclass.Numeric.instance(type.Integer) = $
+    .def. add ( x => y => x.val + y.val )
+
+/*/
+
+== type ==
+A possibly parametrized type is defined
+by assigning to a property of the type proxy.
+To define an unparametrized type, simply assign the definition proxy ($).
+To define a parametrized type, assign a curried function
+taking the type parameters and returning the definition proxy.
+
+type.Foo = $...
+defines an unparametrized type Foo
+
+type.Bar = t => u => $...
+defines a type Bar parametrized by two types.
+
+The definition proxy provoides ways to define various constructs
+such as constructors of the types, or conversion from vanilla JS objects.
+
+== literal ==
+
+A "low level implemented" function that provides conversion
+from vanilla JS objects to HM-typed objects.
+No type checks occur, the conversion is meant to be duck-typed
+and should accept any value with appropriate conversion or some fallback value.
+There should be at most one literal per type.
+
+type.Type = $.literal.Lit(vanilla => result)
+Lit(x) constructs the HM type representing the result value.
+
+== ctor ==
+A "more abstract" function simply providing the internal data of the HM type.
+Multiple constructors may be defined per type.
+
+Nullary functions are often replaced by getters in this framework,
+so the empty () are not required (and not expected) to call the function:
+type.Type = t => $.ctor.CtorNullary()
+Type.CtorNullary will construct the type.
+
+...ctor.CtorSingle(t)
+Type.CtorSingle(x) will construct the type provided that x is of the type t.
+
+Different types may be composed into function types:
+...ctor.CtorFunc(t(Integer))
+Type.CtorFunc(x) where x is of type Integer -> t,
+aka a function taking an Integer and returing t (later on written a x :: Integer -> t)
+
+Multuple parameters bay be provided in a more JS-ish way:
+...ctor.CtorParams(t, Integer)
+Type.CtorParams(x, y) were x :: t, y :: Integer
+
+or in a more Haskell-ish way (curried):
+...ctor.CtorCurry(t)(Integer)
+Type.CtorCurry(x)(y) where x :: t, y :: Integer
+
+Arbitrary (completely polymorphic or somehow restricted) types
+may be introduced into the definition:
+...ctor.CtorPoly(u => Integer(t, u))
+Type.CtorPoly(x) where x :: (t, u) -> Integer
+
+It might be impractical to use such types (where their parameters are completely polymorphic)
+since the functions later defined for them might have a problem accessing the underlying data
+without the knowledge of the underlying type.
+It is usefull, however, to define some restrictions of the newly introduced types with type classes:
+...ctor.CtorRestr(u => v => assert(Numerical(u), Natural(v), v(t, u)))
+Type.CtorRests(x) where x :: v(t, u) where u is Numerical, v is Natural
+
+The assert(r0, ..., rN, result) function checks the constraints r0, ..., rN
+and returns the last parameter - result.
+In this contexts the constraints are type classes, which are basically relations,
+that are satisfied when the given types are in the type class.
+
+The resulting type is basically just a record/struct of the arguments
+given in the constructor + the constructor itself.
+
+/*/
+
+type.Maybe.Just(5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const assert = (b, msg = "assertion failed") => { if (!b) throw msg; }
+
+const Maybe = class {
+    constructor (x) { this.val = x }
+
+    static just        (x) { assert(x != null); return new Maybe(x) }
+    static get nothing ()  { return new Maybe() }
+
+    get isJust    () { return this.val != null }
+    get isNothing () { return !this.isJust }
+
+    get copy () { return new Maybe(this.val) }
+    fmap (f) {
+        const copy = this.copy
+        if (copy.isJust) copy.val = f(copy.val)
+        return copy;
+    }
+    apply (x) {
+        if (this.isJust)
+            return fmap(this.val, x)
+        return Maybe.nothing
+    }
+    static pure (v) { return Just(v) }
+    bind (f) {
+        if (this.isJust)
+            return f(this.val)
+        return Maybe.nothing
+    }
+}
+
+
+const constant = x => () => x
+
+const copy = x => x.copy
+
+const fmap   = (f, x) => x.fmap(f)
+const pure   = (X, v) => X.pure(v)
+const apply  = (f, x) => f.apply(x)
+const bind   = (x, f) => x.bind(f)
+const then   = (x, y) => x.bind(constant(y))
+const before = (x, y) => (x.then(y), x)
+
+</script>

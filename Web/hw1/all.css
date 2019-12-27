@@ -1,0 +1,151 @@
+@font-face {
+    font-family: 'myCustomFont';
+    src: url('OpenSans-Regular.ttf');
+}
+
+.button, a[data-href^=mailto] {
+    display: inline-block; /* prevent parent-child margin collapse. */
+    padding: 8px;
+    background-color: rgb(155, 32, 98);
+    color: white;
+    text-decoration: none;
+    font-family: 'myCustomFont', sans-serif;
+    transition: transform 500ms, background-color 500ms;
+}
+.button:hover, a[data-href^=mailto]:hover {
+    background-color: rgb(172, 146, 161);
+    transform: perspective(500px) rotateX(45deg);
+}
+
+section:target > h1 {
+    color: rgb(113, 2, 61);
+}
+
+header nav {
+    margin: 8px;
+}
+header nav a {
+    text-decoration: none;
+    margin: 0 16px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/** From previous homework: ***************************************************/
+
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'myCustomFont', sans-serif;
+}
+
+p {
+    text-align: justify;
+    line-height: 24px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 16px;
+}
+
+p, ul, .content, table {
+    margin: 16px;
+}
+
+a {
+    color: inherit;
+}
+
+h1 {
+    color: white;
+    background-color: rgb(172, 146, 161);
+}
+header > h1 {
+    background-color: rgb(155, 32, 98);
+    padding: 32px 16px;
+}
+footer > h1 {
+    padding-top: 0;
+}
+footer > ul, nav > ul {
+    margin: 0;
+}
+
+footer {
+    background-color: rgb(172, 146, 161);
+    padding: 16px;
+    color: white;
+    font-family: 'myCustomFont', sans-serif;
+}
+footer:first-of-type {
+    margin-top: 64px;
+}
+footer:last-of-type {
+    background-color: rgb(155, 32, 98);
+    padding: 32px 16px;
+}
+
+/* index.html: */
+
+#intro-img {
+    width: 100%;
+    height: 300px;
+    background-image: url('./plumbus.png');
+    background-size: cover;
+    background-position: center center;
+}
+
+/* order.html: */
+
+article#order table {
+    font-family: 'myCustomFont', sans-serif;
+}
+article#order table td {
+    border: 1px solid black;
+}
+article#order table td, table th {
+    padding: 8px 16px;
+}
+article#order table th {
+    padding: 0 16px;
+}
+
+/* howisitmade.html: */
+
+article#howisitmade {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+article#howisitmade section > .img {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center center;
+}
+
+article#howisitmade section > #shleem + .img {
+    background-image: url('./shleem.png');
+}
+article#howisitmade section > #fleeb + .img {
+    background-image: url('./fleeb.png');
+}
+article#howisitmade section > #shlaammi + .img {
+    background-image: url('./shlaammi.png');
+}
+article#howisitmade section > #hizards + .img {
+    background-image: url('./hizards.png');
+}
+article#howisitmade section > #trombles + .img {
+    background-image: url('./trombles.png');
+}
+article#howisitmade section > #plubis + .img {
+    background-image: url('./plubis.png');
+}
+article#howisitmade section > #plumbus + .img {
+    background-image: url('./regular_old_plumbus.png');
+}

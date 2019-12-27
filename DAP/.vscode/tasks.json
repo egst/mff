@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake -G \"MinGW Makefiles\""
+        },
+        {
+            "label": "make",
+            "type": "shell",
+            "command": "mingw32-make"
+        }
+    ]
+}

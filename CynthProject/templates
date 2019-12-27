@@ -1,0 +1,79 @@
+:: Multiplication ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+syntax:
+    infix left 2 *
+
+inline:
+    ${lhs} * ${rhs}
+
+:: Division ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+syntax:
+    infix left 2 /
+
+inline:
+    ${lhs} / ${rhs}
+
+:: Addition ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+syntax:
+    infix left 3 +
+
+inline:
+    ${lhs} + ${rhs}
+
+:: Subtraction :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+syntax:
+    infix left 3 -
+
+inline:
+    ${lhs} - ${rhs}
+
+:: Convolution :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+syntax:
+    infix left 4 |
+
+arguments:
+    input filter
+
+global:
+    dft_space dft_input__${name};
+    dft_space dft_filter__${name};
+    fftw_plan fftw_plan_input__${name};
+    fftw_plan fftw_plan_inverse__${name};
+    fftw_plan fftw_plan_filter__${name};
+
+    inline floating func__${name} (integral t) {
+        static struct cache computed;
+        if (!computed.computed || t < computed.begin || t >= computed.begin + overlap_step) {
+            for (int i = t - filter_order; i < t - filter_order + dft_size; ++i)
+                dft_input__filtered[i][0] = func__${input}(i);
+            fftw_execute(fftw_plan_input__filtered);
+            for (int i = 0; i < dft_size; ++i) {
+                dft_input__filtered[i][0] = dft_input__filtered[i][0] * dft_filter__filtered[i][0];
+                dft_input__filtered[i][1] = dft_input__filtered[i][1] * dft_filter__filtered[i][1];
+            }
+            fftw_execute(fftw_plan_inverse__filtered);
+            for (int i = t; i < overlap_step; ++i)
+                computed.buffer[i] = dft_input__filtered[i + overlap_step][0];
+            computed.computed = true;
+        }
+        return computed.buffer[t - computed.begin];
+    }
+
+compute_dfts:
+    for (int i = 0; i < filter_order; ++i)
+        dft_filter__${name}[i][0] = func__${filter}(i);
+    fftw_execute(fftw_plan_filter__${name});
+
+fftw_create_plans:
+    fftw_plan_input__${name}   = fftw_plan_dft_1d(dft_size, dft_input__${name},  dft_input__${name},  FFTW_FORWARD,  FFTW_MEASURE);
+    fftw_plan_inverse__${name} = fftw_plan_dft_1d(dft_size, dft_input__${name},  dft_input__${name},  FFTW_BACKWARD, FFTW_MEASURE);
+    fftw_plan_filter__${name}  = fftw_plan_dft_1d(dft_size, dft_filter__${name}, dft_filter__${name}, FFTW_FORWARD,  FFTW_MEASURE);
+
+fftw_destroy_plans:
+    fftw_destroy_plan(fftw_plan_input__${name});
+    fftw_destroy_plan(fftw_plan_inverse__${name});
+    fftw_destroy_plan(fftw_plan_filter__${name});

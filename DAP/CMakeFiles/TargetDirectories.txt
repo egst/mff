@@ -1,0 +1,4 @@
+C:/Users/egst/Dev/School/DAP/CMakeFiles/cynth.dir
+C:/Users/egst/Dev/School/DAP/CMakeFiles/WINLIBS.dir
+C:/Users/egst/Dev/School/DAP/CMakeFiles/edit_cache.dir
+C:/Users/egst/Dev/School/DAP/CMakeFiles/rebuild_cache.dir

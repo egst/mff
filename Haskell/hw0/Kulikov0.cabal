@@ -1,0 +1,15 @@
+Name:		    Kulikov0
+Version:    	1.0.0
+Cabal-Version:  >= 1.4
+Author:		    Maximilian Kulikov
+Maintainer:     kulikov.maximilian@gmail.com
+License:        MIT
+License-File:   LICENSE
+Category:	    Miscellaneous
+Synopsis:	    Input Lines Average
+Description:    Average number of input lines.
+Build-Type:     Simple
+
+executable Kulikov0
+    Main-Is:        Kulikov0.hs
+    Build-Depends:  base
