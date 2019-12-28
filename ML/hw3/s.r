@@ -9,17 +9,19 @@ library(ISLR)
 data.d <- Caravan
 size.d <- nrow(data.d)
 
-### subset data.d.train
+### subset data.d.split$train
 ##  4822 samples from data.d
-### subset data.d.test
+### subset data.d.split$test
 ##  1000 samples from data.d
 
 size.test  <- 1000
 size.train <- size.d - 1000
-set.seed(420)
-s <- sample(size.d)
-data.d.train <- data.d[s[1 : size.test], ]
-data.d.train <- data.d[s[(size.test + 1) : size.d], ]
+split <- function () {
+    set.seed(420)
+    s <- sample(size.d)
+    c(train = data.d[s[1 : size.train], ], test = data.d[s[(size.train + 1) : size.d], ])
+}
+data.d.split <- split(data.d, size.train)
 
 ### dataset data.t - blind test
 ##  1000 samples
